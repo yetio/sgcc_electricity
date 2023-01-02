@@ -186,14 +186,18 @@ class DataFetcher:
     def _get_yearly_data(self, driver):
 
         self._click_button(driver, By.XPATH, "//div[@class='el-tabs__nav is-top']/div[@id='tab-first']")
-
+        
         # wait for data displayed
-        target = driver.find_element(By.CLASS_NAME, "total")
-        WebDriverWait(driver, DRIVER_IMPLICITY_WAIT_TIME).until(EC.visibility_of(target))
+        try:
+            target = driver.find_element(By.CLASS_NAME, "total")
+            WebDriverWait(driver, DRIVER_IMPLICITY_WAIT_TIME).until(EC.visibility_of(target))
 
-        # get data
-        yearly_usage = driver.find_element(By.XPATH, "//ul[@class='total']/li[1]/span").text
-        yearly_charge = driver.find_element(By.XPATH, "//ul[@class='total']/li[2]/span").text
+            # get data
+            yearly_usage = driver.find_element(By.XPATH, "//ul[@class='total']/li[1]/span").text
+            yearly_charge = driver.find_element(By.XPATH, "//ul[@class='total']/li[2]/span").text
+        except Exception as e:
+            yearly_usage = 0
+            yearly_charge = 0
         return yearly_usage, yearly_charge
 
         
