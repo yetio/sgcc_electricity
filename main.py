@@ -27,10 +27,10 @@ def run_task(data_fetcher: DataFetcher, sensor_updator: SensorUpdator):
         user_id_list, balance_list, last_daily_usage_list, yearly_charge_list, yearly_usage_list = data_fetcher.fetch()
         for i in range(0, len(user_id_list)):
             profix = f"_{user_id_list[i]}" if len(user_id_list) > 1 else ""
-            sensor_updator.update(BALANCE_SENSOR_NAME + profix, balance_list[i], BALANCE_UNIT)
-            sensor_updator.update(DAILY_USAGE_SENSOR_NAME + profix, last_daily_usage_list[i], USAGE_UNIT)
-            sensor_updator.update(YEARLY_USAGE_SENSOR_NAME + profix, yearly_usage_list[i], USAGE_UNIT)
-            sensor_updator.update(YEARLY_CHARGE_SENESOR_NAME + profix, yearly_charge_list[i], BALANCE_UNIT)
+            sensor_updator.update(BALANCE_SENSOR_NAME + profix, balance_list[i], BALANCE_UNIT,BALANCE_SENSOR_FRIENDLY_NAME + profix, BALANCE_STATE_CLASS, "")
+            sensor_updator.update(DAILY_USAGE_SENSOR_NAME + profix, last_daily_usage_list[i], USAGE_UNIT,DAILY_USAGE_SENSOR_FRIENDLY_NAME + profix, DAILY_USAGE_STATE_CLASS, USAGE_DEVICE_CLASS)
+            sensor_updator.update(YEARLY_USAGE_SENSOR_NAME + profix, yearly_usage_list[i], USAGE_UNIT,YEARLY_USAGE_SENSOR_FRIENDLY_NAME + profix, YEARLY_USAGE_STATE_CLASS, USAGE_DEVICE_CLASS)
+            sensor_updator.update(YEARLY_CHARGE_SENESOR_NAME + profix, yearly_charge_list[i], BALANCE_UNIT, YEARLY_CHARGE_SENSOR_FRIENDLY_NAME + profix, BALANCE_STATE_CLASS,"")
 
         logging.info("state-refresh task run successfully!")
     except Exception as e:

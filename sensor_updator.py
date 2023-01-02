@@ -9,8 +9,8 @@ class SensorUpdator:
     def __init__(self, base_url: str, token: str):
         self.base_url = base_url[:-1] if base_url.endswith("/") else base_url
         self.token = token
-    
-    def update(self, sensorName: str, sensorState:float, sensorUnit: str):
+
+    def update(self, sensorName: str, sensorState:float, sensorUnit: str, sensorFriendlyName: str, sensorStateClass: str, sensorDeviceClass: str):    
         token = os.getenv("SUPERVISOR_TOKEN") if self.base_url == SUPERVISOR_URL else self.token
         headers = {
         "Content-Type": "application-json",
@@ -20,7 +20,10 @@ class SensorUpdator:
         request_body = {
             "state":sensorState,
             "attributes": {
-                "unit_of_measurement": sensorUnit
+                "unit_of_measurement": sensorUnit,
+                "friendly_name": sensorFriendlyName,
+                "state_class": sensorStateClass,
+                "device_class": sensorDeviceClass
             }
         }
         url = self.base_url + API_PATH + sensorName
